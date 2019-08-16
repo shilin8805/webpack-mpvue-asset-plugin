@@ -11,7 +11,7 @@ const getRelativePath = (filePath) => {
 
 const emitHandle = (compilation, callback) => {
   Object.keys(compilation.entrypoints).forEach(key => {
-    const { chunks } = compilation.entrypoints[key]
+    const {chunks} = compilation.entrypoints[key]
     const entryChunk = chunks.pop()
 
     entryChunk.files.forEach(filePath => {
@@ -33,7 +33,9 @@ const emitHandle = (compilation, callback) => {
               relativePath = getRelativePath(relativePath)
               content = `@import "${relativePath}";\n${content}`
             } else if (!(/^\.map$/.test(extname))) {
-              content = `require("${relativePath}")\n${content}`
+              if (content.indexOf(`require("${relativePath}")`) < 0) {
+                content = `require("${relativePath}")\n${content}`
+              }
             }
           }
         })
@@ -44,7 +46,9 @@ const emitHandle = (compilation, callback) => {
   callback()
 }
 
-function MpvuePlugin() {}
+function MpvuePlugin () {
+}
+
 MpvuePlugin.prototype.apply = compiler => compiler.plugin('emit', emitHandle)
 
 module.exports = MpvuePlugin

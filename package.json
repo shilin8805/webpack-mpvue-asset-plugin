@@ -1,6 +1,6 @@
 {
-  "name": "webpack-mpvue-asset-plugin",
-  "version": "2.0.0",
+  "name": "cb-webpack-mpvue-asset-plugin",
+  "version": "2.0.100",
   "main": "index.js",
   "directories": {
     "lib": "lib"
